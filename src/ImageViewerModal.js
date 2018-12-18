@@ -1,19 +1,5 @@
 import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  SectionList,
-  TouchableHighlight,
-  FlatList,
-  Dimensions,
-  Modal,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
-
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 class ImageViewerModal extends Component {

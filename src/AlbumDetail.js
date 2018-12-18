@@ -3,13 +3,9 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Image,
-  SectionList,
-  TouchableHighlight,
   FlatList,
   Dimensions,
-  Modal,
   TouchableOpacity,
 } from 'react-native';
 

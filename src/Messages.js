@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 
 import Svg, { Path } from 'react-native-svg';
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  SectionList,
-  TouchableHighlight,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, View, Text, SectionList } from 'react-native';
 
 const InMessageView = props => (
   <View style={[styles.item, styles.itemIn]}>

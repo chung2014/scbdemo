@@ -145,7 +145,6 @@ class UserDetail extends Component {
           <Image
             resizeMode="center"
             style={{
-              backgroundColor: 'yellow',
               marginTop: 8,
               height: 120,
               width: 120,
