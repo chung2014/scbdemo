@@ -2,7 +2,7 @@
 
 Make sure you have Node 8.3 or later installed. To run the project iOS app in simulator, you need to have Xcode installed.
 
-## Development Environment I use are the following:
+## Development Environment I am using is the following:
 
 - Xcode 10.1
 - node v8.12.0
