@@ -9,9 +9,11 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+// presentation component
 const UserDetailRenderItem = props => {
   const { item, index, section } = props;
-  const _onPress = () => props.onPressItem(item.id);
+  const _onPressPostItem = () => props.onPressPostItem(item.id);
+  const _onPressAlbumItem = () => props.onPressAlbumItem(item.id);
 
   if (section.title === 'Address') {
     return (
@@ -27,18 +29,20 @@ const UserDetailRenderItem = props => {
     );
   } else if (section.title === 'Albums') {
     return (
-      <View>
-        <View style={styles.rowContainer}>
-          <View style={{ height: 44, justifyContent: 'center' }}>
-            <Text>{item.title}</Text>
+      <TouchableHighlight onPress={_onPressAlbumItem} underlayColor="#dddddd">
+        <View>
+          <View style={styles.rowContainer}>
+            <View style={{ height: 44, justifyContent: 'center' }}>
+              <Text>{item.title}</Text>
+            </View>
           </View>
+          <View style={styles.separator} />
         </View>
-        <View style={styles.separator} />
-      </View>
+      </TouchableHighlight>
     );
   } else if (section.title === 'Posts') {
     return (
-      <TouchableHighlight onPress={_onPress} underlayColor="#dddddd">
+      <TouchableHighlight onPress={_onPressPostItem} underlayColor="#dddddd">
         <View>
           <View style={styles.rowContainer}>
             <View style={{ height: 44, justifyContent: 'center' }}>
@@ -88,7 +92,19 @@ const UserDetailRenderItem = props => {
   return <View />;
 };
 
+// container component
 class UserDetail extends Component {
+  _onAlbumPressed = async albumId => {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`,
+    );
+    const photos = await response.json();
+
+    this.props.navigation.navigate('AlbumDetail', {
+      photos,
+    });
+  };
+
   _onPostPressed = async postId => {
     const response = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
@@ -99,11 +115,6 @@ class UserDetail extends Component {
     const posts = this.props.navigation.getParam('posts', []);
     const post = posts.find(post => post.id === postId);
 
-    console.log('comments');
-    console.log(comments);
-    console.log('post');
-    console.log(post);
-
     this.props.navigation.navigate('Messages', {
       comments,
       user,
@@ -113,7 +124,11 @@ class UserDetail extends Component {
 
   _renderItem = props => {
     return (
-      <UserDetailRenderItem {...props} onPressItem={this._onPostPressed} />
+      <UserDetailRenderItem
+        {...props}
+        onPressAlbumItem={this._onAlbumPressed}
+        onPressPostItem={this._onPostPressed}
+      />
     );
   };
 

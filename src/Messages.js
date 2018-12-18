@@ -91,9 +91,7 @@ class Messages extends Component {
           <Text style={{ paddingTop: 4, color: 'white', fontWeight: 'bold' }}>
             {item.title}
           </Text>
-          <Text style={{ color: 'white' }}>
-            {item.body}
-          </Text>
+          <Text style={{ color: 'white' }}>{item.body}</Text>
         </TopicMessageView>
       );
     }
