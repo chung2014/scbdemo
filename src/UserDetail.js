@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, Text, Image, SectionList } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  SectionList,
+  TouchableHighlight,
+} from 'react-native';
 
-const UserDetailRenderItem = ({ item, index, section }) => {
+const UserDetailRenderItem = props => {
+  const { item, index, section } = props;
+  const _onPress = () => props.onPressItem(item.id);
+
   if (section.title === 'Address') {
     return (
       <View>
@@ -28,37 +38,46 @@ const UserDetailRenderItem = ({ item, index, section }) => {
     );
   } else if (section.title === 'Posts') {
     return (
-      <View>
-        <View style={styles.rowContainer}>
-          <View style={{ height: 44, justifyContent: 'center' }}>
-            <Text
-              style={styles.textTitle}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-            >
-              {item.title}
-            </Text>
-            <Text
-              style={styles.textDetail}
-              ellipsizeMode="tail"
-              numberOfLines={1}
-            >
-              {item.body}
-            </Text>
+      <TouchableHighlight onPress={_onPress} underlayColor="#dddddd">
+        <View>
+          <View style={styles.rowContainer}>
+            <View style={{ height: 44, justifyContent: 'center' }}>
+              <Text
+                style={styles.textTitle}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={styles.textDetail}
+                ellipsizeMode="tail"
+                numberOfLines={1}
+              >
+                {item.body}
+              </Text>
+            </View>
           </View>
+          <View style={styles.separator} />
         </View>
-        <View style={styles.separator} />
-      </View>
+      </TouchableHighlight>
     );
   } else if (section.title === 'Todos') {
     return (
       <View>
         <View style={styles.rowContainer}>
           <View
-            style={{ flex:1, height: 44, flexDirection: 'row', alignItems: 'center' }}
+            style={{
+              flex: 1,
+              height: 44,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
           >
             <Text style={{ flex: 1 }}>{item.title}</Text>
-            <Text style={{ width: 24 }}>{item.completed ? '✅' : ' '}</Text>
+            <Text style={styles.todoIndicator}>
+              {item.completed ? '✅' : ' '}
+            </Text>
           </View>
         </View>
         <View style={styles.separator} />
@@ -70,8 +89,32 @@ const UserDetailRenderItem = ({ item, index, section }) => {
 };
 
 class UserDetail extends Component {
+  _onPostPressed = async postId => {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
+    );
+    const comments = await response.json();
+    const user = this.props.navigation.getParam('user', null);
+
+    const posts = this.props.navigation.getParam('posts', []);
+    const post = posts.find(post => post.id === postId);
+
+    console.log('comments');
+    console.log(comments);
+    console.log('post');
+    console.log(post);
+
+    this.props.navigation.navigate('Messages', {
+      comments,
+      user,
+      post,
+    });
+  };
+
   _renderItem = props => {
-    return <UserDetailRenderItem {...props} />;
+    return (
+      <UserDetailRenderItem {...props} onPressItem={this._onPostPressed} />
+    );
   };
 
   render() {
@@ -168,6 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
   },
+  todoIndicator: { width: 24 },
 });
 
 export default UserDetail;
