@@ -23,9 +23,7 @@ class ImageViewerModal extends Component {
     console.log(url);
     const images = [{ url }];
 
-    return (
-      <ImageViewer imageUrls={images} />
-    );
+    return <ImageViewer imageUrls={images} />;
   }
 }
 
