@@ -23,3 +23,21 @@ $ react-native run-ios
 ```
 
 - or open the Xcode project `scbdemo.xcodeproj` inside the ios/ directory and run it in Xcode.
+
+### Android
+
+- using the `react-native` command
+
+Before you run the below `react-nativ` command to run the project in Android. Make sure you have an Android emulator opening first. Otherwise, you may encounter the following error message when you try to run the project. 
+```sh
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:installDebug'.
+> com.android.builder.testing.api.DeviceException: No connected devices!
+```
+
+```sh
+$ npm i
+$ react-native run-android
+```
